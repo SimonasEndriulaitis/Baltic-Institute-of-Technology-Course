@@ -1,0 +1,10 @@
+.circle
+{
+    display: inline-block;    
+ border-right: 100px solid #00AD48; 
+ border-top: 100px solid #00AD48;
+ border-left: 100px solid #004AAD;
+ border-bottom: 100px solid #004AAD;
+ transform: rotate(-90deg);
+ border-radius: 100px;    
+}

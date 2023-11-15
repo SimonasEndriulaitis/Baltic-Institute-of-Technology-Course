@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+</head>
+
+<body>
+    <h1>Checkout</h1>
+    <form action="/checkout" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="surname">Surname:</label>
+        <input type="text" id="surname" name="surname" required>
+        <br>
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea>
+        <br>
+        <label for="paymentMethod">Payment Method:</label>
+        <select id="paymentMethod" name="paymentMethod" required>
+            <option value="PayPal">PayPal</option>
+            <option value="Mastercard">Mastercard</option>
+            <option value="Visa">Visa</option>
+        </select>
+        <br>
+        <label for="deliveryMethod">Delivery Method:</label>
+        <select id="deliveryMethod" name="deliveryMethod" required>
+            <option value="Pickup">Pickup</option>
+            <option value="Delivery">Delivery</option>
+        </select>
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var cart = [];
+
+        function buy(product, price) {
+            cart.push({ product: product, price: price });
+            alert("Product added to cart.");
+        }
+
+        $("form").submit(function (event) {
+            event.preventDefault();
+
+            var name = $("#name").val();
+            var surname = $("#surname").val();
+            var address = $("#address").val();
+            var paymentMethod = $("#paymentMethod").val();
+            var deliveryMethod = $("#deliveryMethod").val();
+
+            var order = {
+                name: name,
+                surname: surname,
+                address: address,
+                paymentMethod: paymentMethod,
+                deliveryMethod: deliveryMethod,
+                products: cart
+            };
+
+            $.post("/order", order, function (data) {
+                alert("Your order has been placed. The products will be delivered within the next 3 working days.");
+                cart = [];
+                window.location.href = "/";
+            }, "json");
+        });
+    </script>
+</body>
+
+</html>

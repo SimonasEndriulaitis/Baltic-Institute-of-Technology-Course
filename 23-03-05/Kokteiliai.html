@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Atsitiktinis Kokteilis</title>
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<h1 id="cocktailName"></h1>
+			<img id="cocktailImage" src="" width="300" height="300" alt="Cocktail Image">
+			<p id="glassType"></p>
+			<p id="alcoholic"></p>
+			<ul id="ingredients"></ul>
+			<button id="newCocktail">Naujas kokteilis</button>
+		</div>
+	
+		<script>
+			$(document).ready(function() {
+				getRandomCocktail();
+	
+				$("#newCocktail").click(function() {
+					getRandomCocktail();
+				});
+			});
+	
+			function getRandomCocktail() {
+				$.ajax({
+					url: "https://www.thecocktaildb.com/api/json/v1/1/random.php",
+					type: "GET",
+					success: function(data) {
+						var cocktail = data.drinks[0];
+	
+						$("#cocktailName").text(cocktail.strDrink);
+						$("#cocktailImage").attr("src", cocktail.strDrinkThumb);
+						$("#glassType").text("Taurės tipas: " + cocktail.strGlass);
+						$("#alcoholic").text("Alkoholinis: " + cocktail.strAlcoholic);
+	
+						$("#ingredients").empty();
+						for (var i = 1; i <= 15; i++) {
+							if (cocktail["strIngredient" + i]) {
+								var ingredient = cocktail["strIngredient" + i];
+								var measure = cocktail["strMeasure" + i];
+								$("#ingredients").append("<li>" + measure + " " + ingredient + "</li>");
+							}
+						}
+					}
+				})
+			}
+		</script>
+	</body>
+	</html>
+	

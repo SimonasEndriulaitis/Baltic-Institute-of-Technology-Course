@@ -1,0 +1,54 @@
+.heart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .heart {
+    position: relative;
+    width: 100px;
+    height: 90px;
+    transform: rotate(-45deg);
+    background: #ff4f6d;
+    animation: spin-heart 2s linear infinite;
+    animation-play-state: paused;
+  }
+  
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    background-color: inherit;
+    border-radius: 50%;
+  }
+  
+  .heart::before {
+    left: 50px;
+    width: 50px;
+    height: 50px;
+  }
+  
+  .heart::after {
+    left: 0;
+    width: 50px;
+    height: 50px;
+  }
+  
+  @keyframes spin-heart {
+    0% {
+      transform: rotate(-45deg);
+    }
+    100% {
+      transform: rotate(315deg);
+    }
+  }
+  
+  .paused {
+    animation-play-state: paused;
+  }
+  
+  .heart:not(.paused) {
+    animation-play-state: running;
+  }
